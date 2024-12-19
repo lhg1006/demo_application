@@ -101,7 +101,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     border: '1px solid #ccc',
   },
   box: {
-    border: '2px dashed #000',
+    border: '2px dashed #fff',
     background: 'transparent',
     display: 'flex',
     alignItems: 'center',
@@ -110,12 +110,13 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   text: {
     fontSize: '16px',
-    color: '#000',
+    color: '#fff',
     position: 'relative',
   },
   closeButton: {
     marginLeft: '10px',
     cursor: 'pointer',
+    color: '#fff',
   }
 };
 

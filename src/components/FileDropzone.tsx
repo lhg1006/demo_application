@@ -14,7 +14,7 @@ const FileDropzone: React.FC = () => {
 
   return (
     <div>
-      <div {...getRootProps()} style={styles.dropzone}>
+      <div className="common-box" {...getRootProps()} style={styles.dropzone}>
         <input {...getInputProps()} />
         {
           isDragActive ?

@@ -53,12 +53,12 @@ const DraggableBox: React.FC = () => {
 
   return (
     <div
-      style={styles.container}
+      className="common-box relative"
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
     >
-      <button onClick={startDrawing}>박스 생성 시작</button>
+      <button className="common-button" onClick={startDrawing}>박스 생성 시작</button>
       {boxes.map((box, index) => (
         <Rnd
           key={index}
@@ -94,12 +94,6 @@ const DraggableBox: React.FC = () => {
 }
 
 const styles: { [key: string]: React.CSSProperties } = {
-  container: {
-    position: 'relative',
-    width: '100%',
-    height: '250px',
-    border: '1px solid #ccc',
-  },
   box: {
     border: '2px dashed #fff',
     background: 'transparent',
@@ -107,6 +101,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
+    zIndex: 10,
   },
   text: {
     fontSize: '16px',

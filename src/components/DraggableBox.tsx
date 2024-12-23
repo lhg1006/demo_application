@@ -97,7 +97,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   container: {
     position: 'relative',
     width: '100%',
-    height: '500px',
+    height: '250px',
     border: '1px solid #ccc',
   },
   box: {

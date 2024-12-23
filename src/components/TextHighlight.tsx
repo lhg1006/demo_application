@@ -12,24 +12,34 @@ interface Highlight {
 }
 
 const TextHighlight = () => {
+
+    // 하이라이트된 항목들을 저장
     const [highlights, setHighlights] = useState<Highlight[]>([]);
+
+    // 텍스트 박스의 참조를 저장
     const textBoxRef = useRef<HTMLDivElement>(null);
+
+    // 선택된 텍스트를 저장
     const [selectedText, setSelectedText] = useState<string>('');
+
+     // 하이라이트할 수 있는 전체 텍스트 내용
     const [text] = useState(`리액트(React)는 사용자 인터페이스를 구축하기 위한 선언적이고 효율적이며 유연한 JavaScript 라이브러리입니다. 
     "컴포넌트"라고 불리는 작고 고립된 코드의 파편을 이용하여 복잡한 UI를 구성하도록 돕습니다.
     리액트는 페이스북과 개별 오픈소스 개발자 및 기업들 공동체에 의해 유지보수되고 있습니다.`);
 
+     // 마우스로 텍스트 선택을 끝냈을 때 실행
     const handleMouseUp = () => {
+
         const selection = window.getSelection();
-        if (!selection || selection.isCollapsed) return;
+        if (!selection || selection.isCollapsed) return; // 선택된 텍스트가 없으면 종료
 
         const selectedText = selection.toString().trim();
-        if (!selectedText || !textBoxRef.current) return;
+        if (!selectedText || !textBoxRef.current) return; // 선택된 텍스트가 비어있거나 ref가 없으면 종료
 
         // 선택된 텍스트의 전체 텍스트 내 위치 찾기
         const fullText = text;
         const foundIndex = fullText.indexOf(selectedText);
-        if (foundIndex === -1) return;
+        if (foundIndex === -1) return; // 텍스트를 찾지 못하면 종료
 
         const startOffset = foundIndex;
         const endOffset = startOffset + selectedText.length;
@@ -38,7 +48,8 @@ const TextHighlight = () => {
         const isOverlapping = highlights.some(highlight => {
             const highlightedText = text.substring(highlight.startOffset, highlight.endOffset);
             const selectedRange = text.substring(startOffset, endOffset);
-            
+
+             // 겹치는 조건 확인
             return highlightedText.includes(selectedRange) || 
                    selectedRange.includes(highlightedText) ||
                    (startOffset < highlight.endOffset && endOffset > highlight.startOffset);
@@ -47,7 +58,7 @@ const TextHighlight = () => {
         if (!isOverlapping) {
             // 새로운 하이라이트 추가
             const newHighlight: Highlight = {
-                id: Math.random().toString(36).substr(2, 9),
+                id: Math.random().toString(36).substr(2, 9),  // 랜덤 ID 생성
                 text: selectedText,
                 startOffset,
                 endOffset
@@ -58,10 +69,10 @@ const TextHighlight = () => {
             setSelectedText('이미 하이라이트된 영역과 겹칠 수 없습니다.');
         }
 
-        selection.removeAllRanges();
+        selection.removeAllRanges(); // 선택 상태 초기화
     };
 
-    // 하이라이트 제거 함수
+    // 하이라이트 제거
     const removeHighlight = (id: string) => {
         setHighlights(prev => prev.filter(h => h.id !== id));
     };
@@ -74,8 +85,9 @@ const TextHighlight = () => {
         // 시작 위치 기준으로 하이라이트 정렬
         const sortedHighlights = [...highlights].sort((a, b) => a.startOffset - b.startOffset);
 
+        // 각 하이라이트에 대해 처리
         sortedHighlights.forEach((highlight, index) => {
-            // 하이라이트 이전의 일반 텍스트 추가
+             // 일반 텍스트 추가
             if (highlight.startOffset > lastIndex) {
                 result.push(
                     <span key={`text-${index}`}>
